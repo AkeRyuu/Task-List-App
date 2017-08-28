@@ -31,3 +31,6 @@ npm-debug.log
 
 #vsCode
 .vscode
+
+#sass
+public/.sass-cache
