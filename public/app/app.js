@@ -46,6 +46,9 @@ Vue.component('tasklist',{
         },
         changeStatus: function(id) {
             this.data[id].status == "onStart" ? (this.data[id].status = "onProcess",this.data[id].startTime = new Date()) : (this.data[id].status = "onDone",this.data[id].endTime = new Date());
+        },
+        addTask: function(obj) {
+            this.data.push(obj);
         }
     }
 })
@@ -87,7 +90,22 @@ Vue.component('taskTime',{
 })
 
 Vue.component('modal', {
-    template: '#modal-template'
+    template: '#modal-template',
+    props: {
+        data: Array
+    },
+    data: function() {
+        return {obj:{
+            status: "onStart",
+            task: "",
+            contact: ""}}
+    },
+    methods: {
+        submit: function() {
+            (this.obj.task != '' && this.obj.contact != '') ? this.data.push(this.obj) : console.log("bad fields");
+            this.$emit('close');
+        }
+    }
   })
 
 
