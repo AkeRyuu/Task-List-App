@@ -1,36 +1,3 @@
-var list = [{
-    status: "onStart",
-    task: "Text text Text text Text text Text text Text text ",
-    contact: "+3086347070618",
-
-},
-{
-    status: "onStart",
-    task: "Text text Text text Text text Text text Text text ",
-    contact: "+3086347070618",
-
-},
-{
-    status: "onStart",
-    task: "Text text Text text Text text Text text Text text ",
-    contact: "+3086347070618",
-
-},
-{
-    status: "onStart",
-    task: "Text text Text text Text text Text text Text text ",
-    contact: "+3086347070618",
-
-},
-{
-    status: "onStart",
-    task: "Text text Text text Text text Text text Text text ",
-    contact: "+3086347070618",
-
-}
-]
-
-
 Vue.component('tasklist',{
     template: '<ul><li v-for="(task,index) in data">\
     <status v-bind:status.sync="task.status"></status> | {{task.task}} | {{task.contact}} | \
