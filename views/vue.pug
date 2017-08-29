@@ -3,10 +3,12 @@ extends index.pug
 block vue
     script(src="https://unpkg.com/vue")
     script(src="/app/app.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.slim.js")
 
 block app
     #app {{message}}
-        tasklist(v-bind:data='taskList')
+        statusfilter(@updatefilter="updateFilter")
+        tasklist(v-bind:data='taskList',v-bind:filter="filter")
         modal(v-if="showModal",@close="showModal = false",v-bind:data="taskList")
         button#show-modal(@click="showModal = true") Show Modal
 

@@ -1,11 +1,12 @@
 Vue.component('tasklist',{
-    template: '<ul><li v-for="(task,index) in data">\
+    template: '<ul><li v-for="(task,index) in data" v-if="check(task.status)">\
     <status v-bind:status.sync="task.status"></status> | {{task.task}} | {{task.contact}} | \
     <taskAction v-bind:status="task.status" v-on:change="changeStatus(index)"></taskAction>\
     <taskTime v-bind:status="task.status" :startTime="task.startTime" :endTime="task.endTime"></taskTime>\
     </li></ul>',
     props: {
-        data: Array
+        data: Array,
+        filter: Array
     },
     methods: {
         remove: function(e) {
@@ -16,6 +17,15 @@ Vue.component('tasklist',{
         },
         addTask: function(obj) {
             this.data.push(obj);
+        },
+        check: function(status) {
+            if (this.filter.length == 0) return true; else {
+                let res = false;
+                this.filter.forEach(e=>{
+                    if (status == e) res = true;
+                })
+                return res;
+            }
         }
     }
 })
@@ -76,11 +86,35 @@ Vue.component('modal', {
   })
 
 
+Vue.component('statusfilter',{
+    data:function () {
+        return {filter: []}
+    },
+    template: '<div><input type="checkbox" @change="update" id="onStart" value="onStart" v-model="filter">\
+    <label for="onStart">New</label>\
+    <input type="checkbox" @change="update" id="onProcess" value="onProcess" v-model="filter">\
+    <label for="onProcess">Processing</label>\
+    <input type="checkbox" @change="update" id="onDone" value="onDone" v-model="filter">\
+    <label for="onDone">Done</label></div>',
+    methods: {
+        update: function() {
+            this.$emit('updatefilter',this.filter);
+        }
+    }
+})
+
+
 var app = new Vue({
     el:'#app',
     data: {
         message: 'Hello Vue!',
         taskList: typeof(list) != "undefined" ? list : [],
-        showModal: false
+        showModal: false,
+        filter: []
+    },
+    methods:{
+        updateFilter: function(val) {
+            this.filter = val;
+        }
     }
 })
