@@ -24,10 +24,23 @@ var server = http.createServer(app);
 
 
 var io = require('socket.io')(server);
-
+let list = [];
 io.on('connection', function(socket){
-  // console.log(socket);
   console.log('a user connected');
+  
+  socket.on('get list', id=>{
+    io.sockets.connected[id].emit('get list', list);
+  })
+
+  socket.on('new task', (task)=>{
+    list.push(task);
+    socket.broadcast.emit('new task',task);
+  });
+
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+
 });
 
 

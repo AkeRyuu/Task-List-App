@@ -1,3 +1,6 @@
+var socket = io({
+    autoConnect: true
+  });
 Vue.component('tasklist',{
     template: '<ul><li v-for="(task,index) in data" v-if="check(task.status)">\
     <status v-bind:status.sync="task.status"></status> | {{task.task}} | {{task.contact}} | \
@@ -79,7 +82,7 @@ Vue.component('modal', {
     },
     methods: {
         submit: function() {
-            (this.obj.task != '' && this.obj.contact != '') ? this.data.push(this.obj) : console.log("bad fields");
+            (this.obj.task != '' && this.obj.contact != '') ? (this.data.push(this.obj),socket.emit('new task',this.obj)) : console.log("bad fields");
             this.$emit('close');
         }
     }
@@ -108,13 +111,35 @@ var app = new Vue({
     el:'#app',
     data: {
         message: 'Hello Vue!',
-        taskList: typeof(list) != "undefined" ? list : [],
+        taskList: [],
         showModal: false,
         filter: []
     },
     methods:{
         updateFilter: function(val) {
             this.filter = val;
+        },
+        getList: function(val) {
+            console.log(val);
         }
+    },
+    watch:{
+        taskList: function(newVal){
+            console.log(newVal);
+        }
+    },
+    created:function(){
+        socket.on('connect',()=>{
+            socket.emit('new task',{contact:"dsasadsa",status:"onStart",task:"dfadsasad"})
+            socket.emit('get list',socket.id);
+        })        
     }
+})
+
+socket.on('get list', function(list){
+    app.taskList = list;
+  });
+socket.on('new task', function(task){
+    console.log(task);
+    app.taskList.push(task);
 })
