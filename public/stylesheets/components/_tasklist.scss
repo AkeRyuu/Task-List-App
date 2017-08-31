@@ -1,0 +1,81 @@
+.tasklist {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 5px;
+    margin-right: 125px;
+    margin-top: 35px;    
+    li {
+        display: flex;
+        border-bottom: 1px solid #808080;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        overflow: auto;
+        height: 90%;
+        .user {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .status {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .task {
+            flex: 7;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact {
+            flex: 4;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .taskAction {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            a {
+                border: 3px solid;
+                margin: auto;
+                padding: 7px 20px;
+                border-radius: 15px;
+                cursor: pointer;
+                color: #008CFC;
+                &.onStart {
+                    border-color: #008CFC;
+                    color: #008CFC;
+                }
+                &.onProcess {
+                    border-color:  #B2A81F;
+                    color:  #B2A81F;
+                }
+                &.onDone {
+                    border-color: #A7A7A7;
+                    color: #A7A7A7;
+                    cursor: default;
+                }
+            }
+        }
+    }
+    label {
+        color: grey;
+    }
+    span {
+        border: 2px solid #808080;
+        width: fit-content;
+        padding: 3px 7px;
+        border-radius: 13px;
+        margin-top: 5px;
+    }
+    p {
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-size: 18px;
+    }
+    
+}

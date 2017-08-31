@@ -1,0 +1,21 @@
+.statusfilter {
+    display: flex;
+    div {
+        margin: 0 5px;
+        &:hover {
+            transform: scale(0.98);
+        }
+        input {
+            display: none;
+            &:checked + label {
+                border-color: green;
+            }
+        }
+        label {
+            border: 2px solid grey;
+            padding: 4px 8px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+    }
+}

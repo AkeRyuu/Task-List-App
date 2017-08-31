@@ -6,21 +6,26 @@ block vue
     script(src="/app/app.js")
 
 block app
-    #app {{message}}
-        statusfilter(@updatefilter="updateFilter")
-        tasklist(v-bind:data='taskList',v-bind:filter="filter")
-        modal(v-if="showModal",@close="showModal = false",v-bind:data="taskList")
-        button#show-modal(@click="showModal = true") Show Modal
+    #app
+        .menu 
+        //- dorobutu background menu !!!!     
+        .task-window
+            statusfilter(@updatefilter="updateFilter")
+            tasklist(v-bind:data='taskList',v-bind:filter="filter")
+            modal(v-if="showModal",@close="showModal = false",v-bind:data="taskList")
+            button#show-modal(@click="showModal = true") +
 
 block modal
     script#modal-template(type="text/x-template").
         <transition name="modal">
             <div class="modal-mask">
-                <div class="modal-wrapper">
+                <div class="modal-wrapper" @click.self="close">
                     <div class="modal-container">
-                        <input type="text" v-model="obj.task">
+                        <label>Задача</label>
+                        <textarea cols="30" rows="10" v-model="obj.task"></textarea>
+                        <label>Контакти</label>
                         <input type="text" v-model="obj.contact">
-                        <button class="modal-default-button" @click="submit">OK</button>
+                        <button class="modal-default-button" @click="submit">Добавити</button>
                     </div>
                 </div>
             </div>

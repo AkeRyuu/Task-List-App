@@ -41,6 +41,10 @@ io.on('connection', function(socket){
     console.log('user disconnected');
   });
 
+  socket.on('new status', function(e){
+    list[e.id].status = e.status;
+    socket.broadcast.emit('new status',{id:e.id,status:e.status});
+  })
 });
 
 
