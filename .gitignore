@@ -34,3 +34,6 @@ npm-debug.log
 
 #sass
 public/.sass-cache
+
+#security
+security

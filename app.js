@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport') , LocalAPIKeyStrategy = require('passport-localapikey').Strategy;
+var session = require('express-session');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -22,6 +25,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('node-compass')({mode: 'expanded'}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('trust proxy', 1); // trust first proxy 
+app.use(session({
+  secret: 'fenrir',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', index);
 app.use('/users', users);

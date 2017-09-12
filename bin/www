@@ -7,6 +7,9 @@
 var app = require('../app');
 var debug = require('debug')('momont:server');
 var http = require('http');
+var session = require('../db');
+var security = require('../security');
+
 
 /**
  * Get port from environment and store in Express.
@@ -24,9 +27,12 @@ var server = http.createServer(app);
 
 
 var io = require('socket.io')(server);
+
+io.use(security.socket);
+
 let list = [];
 io.on('connection', function(socket){
-  console.log('a user connected');
+  console.log('a user connected',socket.userID);
   
   socket.on('get list', id=>{
     io.sockets.connected[id].emit('get list', list);
@@ -46,6 +52,7 @@ io.on('connection', function(socket){
     socket.broadcast.emit('new status',{id:e.id,status:e.status});
   })
 });
+
 
 
 /**

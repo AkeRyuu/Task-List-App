@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var session = require('../db');
+var middle = require('../security').middle;
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', middle ,function(req, res, next) {
   res.render('vue', { title: 'Express' });
 });
 
